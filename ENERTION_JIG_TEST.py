@@ -14,7 +14,7 @@ for file in cwd_dir_files:
         file_in = file
         break
 if file_in == "NONE":
-    print("Binary file not found.  Please ensure that .bin file is in the same directory as this script.")
+    print("Binary file not found.  Please ensure that .bin or .hex file is in the same directory as this script.")
     exit(1)
 
 ST_LINK_FOUND = 0
