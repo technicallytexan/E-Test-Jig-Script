@@ -49,9 +49,6 @@ while True:
         while ser.inWaiting():
             pass
         inbuffer = ser.read(6)
-#   ######DEBUGGING#####
-#    print(inbuffer)
-#   ######DEBUGGING#####
         ser.flushInput()
 # Send command to open programming lines for board
         time.sleep(1)
@@ -61,9 +58,6 @@ while True:
         while ser.inWaiting():
             pass
         inbuffer = ser.read(6)
-#   ######DEBUGGING#####
-#       print(inbuffer)
-#   ######DEBUGGING#####
         ser.flushInput()
 # Program board
         print("".join(["PROGRAMMING BOARD ", i, "..."])
@@ -77,9 +71,6 @@ while True:
             pass
         inbuffer = ser.read(6)
         print("COMPLETE")
-#   ######DEBUGGING#####
-#       print(inbuffer)
-#   ######DEBUGGING#####
         ser.flushInput()
         if re.search("PA", inbuffer):
             results.append("PASS")
