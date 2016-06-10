@@ -6,6 +6,14 @@ import time
 
 __author__ = 'Dustin'
 
+localtime = time.localtime()
+
+log_file = "-".join([str(localtime.tm_year), str(localtime.tm_mon), str(localtime.tm_mday), 
+                     str(localtime.tm_hour), str(localtime.tm_min), str(localtime.tm_sec), 
+                     "TEST_LOG.log"])
+
+testing_log = open(log_file, 'w')
+
 print("ENERTION PROGRAMMING AND TESTING")
 
 file_in = "NONE"
@@ -49,9 +57,15 @@ results = []
 
 # Commence the jigglin'
 print("BEGINNING ENERTION PROGRAMMING SEQUENCE")
+testing_log.write("ENERTION TEST LOG\r\n")
 while True:
     print("PRESS ENTER WHEN PANEL IS INSERTED INTO THE JIG")
     print("TYPE \"EXIT\" TO CLOSE THE PROGRAM")
+    localtime = time.localtime()
+    testing_log.write("".join(["PANEL TEST BEGAN AT ", ":".join([str(localtime.tm_hour),
+                      str(localtime.tm_min), str(localtime.tm_sec)]), " ON ",
+                      "/".join([str(localtime.tm_mon), str(localtime.tm_mday),
+                      str(localtime.tm_year)])]))
     op_input = input(">> ")
     if re.search("(?i)^exit$", op_input):
         exit(0)
@@ -79,28 +93,36 @@ while True:
         inbuffer = ser.readline()
         ser.flushInput()
 # Program board
-        print("".join(["PROGRAMMING BOARD ", i, "..."]))
+        #print("".join(["PROGRAMMING BOARD ", i, "..."]))
         os.system("".join(["ST-LINK_CLI.exe -c SWD SWCLK=9 -P \"", file_in, "\" 0x08000000 -V"]))
         ser.write("PC\r\n")
-        print("".join(["TESTING BOARD ", i, "... "]), end="")
+        #print("".join(["TESTING BOARD ", i, "... "]), end="")
         ser.flushOutput()
 # Wait for response
         while ser.inWaiting():
             pass
         inbuffer = ser.readline()
-        print("COMPLETE")
+        #print("COMPLETE")
         ser.flushInput()
 # Test if pass or fail
         if re.search("PA", inbuffer):
             results.append("PASS")
+            testing_log.write("".join(["BOARD ", i, " RESULT: PASS\r\n"]))
         else:
             results.append("FAIL")
+            testing_log.write("".join(["BOARD ", i, " RESULT: PASS\r\n"]))
     print("TESTING RESULTS:")
     i = 1
     for result in results:
         print("".join(["BOARD ", i, " RESULT: ", result]))
         i += 1
     del results[:]
+    testing_log.write("\r\n")
+    localtime = time.localtime()
+    testing_log.write("".join(["PANEL TEST ENDED AT ", ":".join([str(localtime.tm_hour),
+                      str(localtime.tm_min), str(localtime.tm_sec)]), " ON ",
+                      "/".join([str(localtime.tm_mon), str(localtime.tm_mday),
+                      str(localtime.tm_year)])]))
 
 print("###########################################")
 print("###########################################")
