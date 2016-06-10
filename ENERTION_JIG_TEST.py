@@ -6,6 +6,7 @@ import time
 
 __author__ = 'Dustin'
 
+
 file_in = "NONE"
 cwd_dir_files = os.listdir(os.getcwd())
 # Get filename for binary
@@ -14,7 +15,7 @@ for file in cwd_dir_files:
         file_in = file
         break
 if file_in == "NONE":
-    print("Binary file not found.  Please ensure that .bin or .hex file is in the same directory as this script.")
+    print("BINARY FILE NOT FOUND")
     exit(1)
 
 ST_LINK_FOUND = 0
@@ -22,81 +23,71 @@ for file in cwd_dir_files:
     if re.search("(ST-LINK[\w]*.exe)", file):
         ST_LINK_FOUND = 1
 if ST_LINK_FOUND == 0:
-    print("ST-LINK Command Line Programmer Not Found.")
+    print("ST-LINK COMMAND LINE INTERFACE NOT FOUND")
     exit(1)
 
 # Find COM port
 COM_ports = serial.tools.list_ports_windows.comports()
 # Search for correct COM port and open it
 for port in COM_ports:
-    if re.search("DNDKSY0A", port.serial_number):
+    if re.search("DNDKSY0A", port.serial_number):    # TODO: This needs to be changed to another serial port parameter
         ser = serial.Serial('COM10', 115200, timeout=None, parity=serial.PARITY_NONE, bytesize=serial.EIGHTBITS, stopbits=serial.STOPBITS_ONE, rtscts=0)
         print("SERIAL COM PORT CONNECTED")
         break
-ser.flushInput()
-ser.flush()
-ser.flushOutput()
-while ser.inWaiting():
-    pass
-print(ser.read(6))
-ser.flushInput()
-ser.flush()
-ser.flushOutput()
-inbuffer = []
-# Send initialize command
-print(ser.write("I\r\n"))
-print("BEGINNING ENERTION PROGRAMMING SEQUENCE")
-ser.flushInput()
-ser.flush()
-ser.flushOutput()
-# Wait for response
-while ser.inWaiting():
-    pass
-inbuffer = ser.read(6)
-#   ######DEBUGGING#####
-print(inbuffer)
-#   ######DEBUGGING#####
-ser.flushInput()
-ser.flush()
-ser.flushOutput()
-inbuffer = []
-# Send command to open programming lines for board 1
-print("PROGRAMMING BOARD 1")
-time.sleep(1)
-print(ser.write("I\r\n"))
-ser.flushInput()
-ser.flush()
-ser.flushOutput()
 
+# Commence the jigglin'
+print("BEGINNING ENERTION PROGRAMMING SEQUENCE")
+while True:
+    for i in range(1,10):
+        ser.flushInput()
+        ser.flushOutput()
+        inbuffer = []
+# Send initialize command
+        ser.write("INIT\r\n")
+        ser.flushOutput()
 # Wait for response
-while ser.inWaiting():
-    pass
-inbuffer = ser.read(6)
+        while ser.inWaiting():
+            pass
+        inbuffer = ser.read(6)
 #   ######DEBUGGING#####
-print(inbuffer)
+        print(inbuffer)
 #   ######DEBUGGING#####
-ser.flushInput()
-ser.flush()
-ser.flushOutput()
-# Program board 1
-os.system("".join(["ST-LINK_CLI.exe -c SWD SWCLK=9 -P \"", file_in, "\" 0x08000000 -V"]))
-#os.system("TASKKILL /F /IM ST-LINK_CLI.exe")
-print(ser.write("PC\r\n"))
-ser.flushInput()
-ser.flush()
-ser.flushOutput()
+        ser.flushInput()
+        inbuffer = []
+# Send command to open programming lines for board
+        time.sleep(1)
+        ser.write("PB\r\n")
+        ser.flushOutput()
 # Wait for response
-while ser.inWaiting():
-    pass
-inbuffer = ser.read(6)
+        while ser.inWaiting():
+            pass
+        inbuffer = ser.read(6)
 #   ######DEBUGGING#####
-print(inbuffer)
+        print(inbuffer)
 #   ######DEBUGGING#####
-ser.flushInput()
-ser.flush()
-ser.flushOutput()
-if re.search("(PA)", inbuffer):
-    print("BOARD 1 TESTING PASSED")
-else:
-    print("BOARD 1 TESTING FAILED")
-print("CONTINUING TO NEXT BOARD")
+        ser.flushInput()
+# Program board
+        print("".join(["PROGRAMMING BOARD ", i, "..."])
+        os.system("".join(["ST-LINK_CLI.exe -c SWD SWCLK=9 -P \"", file_in, "\" 0x08000000 -V"]))
+#os.system("TASKKILL /F /IM ST-LINK_CLI.exe")    # Not needed apparently :)
+        ser.write("PC\r\n")
+        ser.flushOutput()
+# Wait for response
+        while ser.inWaiting():
+            pass
+        inbuffer = ser.read(6)
+#   ######DEBUGGING#####
+        print(inbuffer)
+#   ######DEBUGGING#####
+        ser.flushInput()
+        if re.search("PA", inbuffer):
+            results.append("PASS")
+        else:
+            results.append("FAIL")
+    print("TESTING RESULTS:")
+    i = 1
+    for result in results:
+        print("".join(["Board ", i, " Result: ", result]))
+        i += 1
+    print("PRESS ANY KEY WHEN NEXT PANEL IS INSERTED INTO THE JIG OR EXIT THE PROGRAM IF FINISHED")
+    raw_input("")
