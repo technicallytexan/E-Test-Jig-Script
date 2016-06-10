@@ -107,9 +107,9 @@ while True:
     print("###########################################")
     op_input = input(">> ")
     
-    if re.search("[Ee][Xx][Ii][Tt]", op_input):
+    if re.search("^[Ee][Xx][Ii][Tt]$", op_input):
         exit(0)
-    else:
+    elif re.search("^[1-9]0?$", op_input):
         print("BEGINNING ENERTION PROGRAMMING SEQUENCE")
         print("PRESS ENTER WHEN PANEL IS INSERTED INTO THE JIG OR EXIT THE PROGRAM IF FINISHED")
         op_input = input("")
@@ -156,4 +156,7 @@ while True:
             print("".join(["BOARD ", op_input, " RESULT: ", result]))
             i += 1
         del results[:]
+    else:
+        print("WRONG COMMAND ENTERED.  TRY AGAIN.")
+
     
