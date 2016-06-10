@@ -43,7 +43,7 @@ while port_not_found:
     COM_ports = serial.tools.list_ports_windows.comports()
 # Search for correct COM port and open it
     for port in COM_ports:
-        if re.search("!PRODUCT ID HERE!", port.pid):    
+        if re.search("!HW ID HERE!", port.hwid):    
             ser = serial.Serial(port, 115200, timeout=None, parity=serial.PARITY_NONE, bytesize=serial.EIGHTBITS, 
                                 stopbits=serial.STOPBITS_ONE, rtscts=0)
             print("SERIAL COM PORT CONNECTED")
