@@ -6,7 +6,6 @@ import time
 
 __author__ = 'Dustin'
 
-
 file_in = "NONE"
 cwd_dir_files = os.listdir(os.getcwd())
 # Get filename for binary
@@ -41,7 +40,6 @@ while True:
     for i in range(1,10):
         ser.flushInput()
         ser.flushOutput()
-        inbuffer = []
 # Send initialize command
         ser.write("INIT\r\n")
         ser.flushOutput()
@@ -50,10 +48,9 @@ while True:
             pass
         inbuffer = ser.read(6)
 #   ######DEBUGGING#####
-        print(inbuffer)
+#    print(inbuffer)
 #   ######DEBUGGING#####
         ser.flushInput()
-        inbuffer = []
 # Send command to open programming lines for board
         time.sleep(1)
         ser.write("PB\r\n")
@@ -63,7 +60,7 @@ while True:
             pass
         inbuffer = ser.read(6)
 #   ######DEBUGGING#####
-        print(inbuffer)
+#       print(inbuffer)
 #   ######DEBUGGING#####
         ser.flushInput()
 # Program board
@@ -71,13 +68,15 @@ while True:
         os.system("".join(["ST-LINK_CLI.exe -c SWD SWCLK=9 -P \"", file_in, "\" 0x08000000 -V"]))
 #os.system("TASKKILL /F /IM ST-LINK_CLI.exe")    # Not needed apparently :)
         ser.write("PC\r\n")
+        print("".join(["TESTING BOARD ", i, "... "], end="")
         ser.flushOutput()
 # Wait for response
         while ser.inWaiting():
             pass
         inbuffer = ser.read(6)
+        print("COMPLETE")
 #   ######DEBUGGING#####
-        print(inbuffer)
+#       print(inbuffer)
 #   ######DEBUGGING#####
         ser.flushInput()
         if re.search("PA", inbuffer):
