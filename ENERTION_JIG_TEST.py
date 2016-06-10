@@ -120,9 +120,9 @@ while True:
     testing_log.write("\r\n")
     localtime = time.localtime()
     testing_log.write("".join(["PANEL TEST ENDED AT ", ":".join([str(localtime.tm_hour),
-                      str(localtime.tm_min), str(localtime.tm_sec)]), " ON ",
-                      "/".join([str(localtime.tm_mon), str(localtime.tm_mday),
-                      str(localtime.tm_year)])]))
+                        str(localtime.tm_min), str(localtime.tm_sec)]), " ON ",
+                        "/".join([str(localtime.tm_mon), str(localtime.tm_mday),
+                        str(localtime.tm_year)])]))
 
 testing_log.close()
 
