@@ -37,6 +37,8 @@ for port in COM_ports:
 # Commence the jigglin'
 print("BEGINNING ENERTION PROGRAMMING SEQUENCE")
 while True:
+    print("PRESS ENTER WHEN PANEL IS INSERTED INTO THE JIG OR EXIT THE PROGRAM IF FINISHED")
+    raw_input("")
     for i in range(1,10):
         ser.flushInput()
         ser.flushOutput()
@@ -88,5 +90,3 @@ while True:
     for result in results:
         print("".join(["Board ", i, " Result: ", result]))
         i += 1
-    print("PRESS ENTER WHEN NEXT PANEL IS INSERTED INTO THE JIG OR EXIT THE PROGRAM IF FINISHED")
-    raw_input("")
