@@ -124,6 +124,8 @@ while True:
                       "/".join([str(localtime.tm_mon), str(localtime.tm_mday),
                       str(localtime.tm_year)])]))
 
+testing_log.close()
+
 print("###########################################")
 print("###########################################")
 print("## SUPER DUPER TOP SECRET DEBUGGING MENU ##")
