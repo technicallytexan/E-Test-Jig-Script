@@ -28,10 +28,10 @@ if ST_LINK_FOUND == 0:
     exit(1)
 
 # Find COM port
-port_found = 0
+port_not_found = 1
 initial_count = time.clock()
 print("SEARCHING FOR JIG...")
-while port_found == 0:
+while port_not_found:
     COM_ports = serial.tools.list_ports_windows.comports()
 # Search for correct COM port and open it
     for port in COM_ports:
@@ -39,7 +39,7 @@ while port_found == 0:
             ser = serial.Serial(port, 115200, timeout=None, parity=serial.PARITY_NONE, bytesize=serial.EIGHTBITS, 
                                 stopbits=serial.STOPBITS_ONE, rtscts=0)
             print("SERIAL COM PORT CONNECTED")
-            port_found = 1
+            port_not_found = 0
             break
     if (time.clock() - initial_count) >= 30:
         print("ERROR: TIMED OUT - CANNOT FIND JIG")
