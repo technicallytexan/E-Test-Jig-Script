@@ -55,6 +55,7 @@ while True:
 # Send command to open programming lines for board
         time.sleep(1)
         ser.write("PB\r\n")
+        # ser.write("".join(["PB", i, "\r\n"]))
         ser.flushOutput()
 # Wait for response
         while ser.inWaiting():
