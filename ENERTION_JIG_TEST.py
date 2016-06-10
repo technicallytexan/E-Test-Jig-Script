@@ -144,7 +144,7 @@ while True:
         while ser.inWaiting():
             pass
         inbuffer = ser.read(6)
-           ser.flushInput()
+            ser.flushInput()
 # Program board
         print("".join(["PROGRAMMING BOARD ", op_input, "..."])
         os.system("".join(["ST-LINK_CLI.exe -c SWD SWCLK=9 -P \"", file_in, "\" 0x08000000 -V"]))
