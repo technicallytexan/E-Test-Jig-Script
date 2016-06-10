@@ -147,7 +147,7 @@ while True:
     op_input = input(">> ")
     if re.search("(?i)^exit$", op_input):
         exit(0)
-    elif re.search("^[1-9]0?$", op_input):
+    elif re.search("^([1-9]|10)$", op_input):
         print("BEGINNING ENERTION PROGRAMMING SEQUENCE")
         print("PRESS ENTER WHEN PANEL IS INSERTED INTO THE JIG OR EXIT THE PROGRAM IF FINISHED")
         op_input = input("")
