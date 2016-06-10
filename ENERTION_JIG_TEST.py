@@ -36,7 +36,8 @@ while port_found == 0:
 # Search for correct COM port and open it
     for port in COM_ports:
         if re.search("!PRODUCT ID HERE!", port.pid):    
-            ser = serial.Serial(port, 115200, timeout=None, parity=serial.PARITY_NONE, bytesize=serial.EIGHTBITS, stopbits=serial.STOPBITS_ONE, rtscts=0)
+            ser = serial.Serial(port, 115200, timeout=None, parity=serial.PARITY_NONE, bytesize=serial.EIGHTBITS, 
+                                stopbits=serial.STOPBITS_ONE, rtscts=0)
             print("SERIAL COM PORT CONNECTED")
             port_found = 1
             break
