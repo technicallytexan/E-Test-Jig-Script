@@ -19,17 +19,17 @@ print("ENERTION PROGRAMMING AND TESTING")
 file_in = "NONE"
 cwd_dir_files = os.listdir(os.getcwd())
 # Get filename for binary
-for file in cwd_dir_files:
-    if re.search(".(bin|hex)$", file):
-        file_in = file
+for bin_file in cwd_dir_files:
+    if re.search(".(bin|hex)$", bin_file):
+        file_in = bin_file
         break
 if file_in == "NONE":
     print("ERROR: BINARY FILE NOT FOUND")
     exit(1)
 
 ST_LINK_FOUND = 0
-for file in cwd_dir_files:
-    if re.search("ST-LINK.*\.(exe|EXE)$", file):
+for st_file in cwd_dir_files:
+    if re.search("ST-LINK.*\.(exe|EXE)$", st_file):
         ST_LINK_FOUND = 1
 if ST_LINK_FOUND == 0:
     print("ERROR: ST-LINK COMMAND LINE INTERFACE NOT FOUND")
@@ -149,8 +149,9 @@ while True:
         exit(0)
     elif re.search("^([1-9]|10)$", op_input):
         print("BEGINNING ENERTION PROGRAMMING SEQUENCE")
-        print("PRESS ENTER WHEN PANEL IS INSERTED INTO THE JIG OR EXIT THE PROGRAM IF FINISHED")
-        op_input = input("")
+        print("PRESS ENTER WHEN PANEL IS INSERTED INTO THE JIG")
+        print("TYPE \"EXIT\" TO CLOSE THE PROGRAM")
+        op_input = input(">> ")
         ser.flushInput()
         ser.flushOutput()
 # Send initialize command
