@@ -88,5 +88,5 @@ while True:
     for result in results:
         print("".join(["Board ", i, " Result: ", result]))
         i += 1
-    print("PRESS ANY KEY WHEN NEXT PANEL IS INSERTED INTO THE JIG OR EXIT THE PROGRAM IF FINISHED")
+    print("PRESS ENTER WHEN NEXT PANEL IS INSERTED INTO THE JIG OR EXIT THE PROGRAM IF FINISHED")
     raw_input("")
