@@ -174,7 +174,7 @@ while True:
         print("".join(["PROGRAMMING BOARD ", op_input, "..."]))
         os.system("".join(["ST-LINK_CLI.exe -c SWD SWCLK=9 -P \"", file_in, "\" 0x08000000 -V"]))
         ser.write("PC\r\n")
-        print("".join(["TESTING BOARD ", op_input, "... "]), end="")
+        print("".join(["TESTING BOARD ", op_input, "... "]))
         ser.flushOutput()
 # Wait for response
         while ser.inWaiting():
