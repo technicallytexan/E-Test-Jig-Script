@@ -69,7 +69,7 @@ while True:
     op_input = input(">> ")
     if re.search("(?i)^exit$", op_input):
         exit(0)
-    if re.search("^DB87$", op_input):
+    if re.search("(?i)^DB87$", op_input):
         break
     for i in range(1, 10):
         ser.flushInput()
