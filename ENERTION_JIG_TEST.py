@@ -50,7 +50,7 @@ print("BEGINNING ENERTION PROGRAMMING SEQUENCE")
 while True:
     print("PRESS ENTER WHEN PANEL IS INSERTED INTO THE JIG")
     print("TYPE \"EXIT\" TO CLOSE THE PROGRAM")
-    op_input = input("")
+    op_input = input(">> ")
     if re.search("^[Ee][Xx][Ii][Tt]$", op_input):
         exit(0)
     if re.search("DB87", op_input):
@@ -100,26 +100,25 @@ while True:
         i += 1
     del results[:]
 
+print("###########################################")
+print("###########################################")
+print("## SUPER DUPER TOP SECRET DEBUGGING MENU ##")
+print("## OPTIONS:                              ##")
+print("##    1:  PROGRAM AND TEST BOARD 1       ##")
+print("##    2:  PROGRAM AND TEST BOARD 2       ##")
+print("##    3:  PROGRAM AND TEST BOARD 3       ##")
+print("##    4:  PROGRAM AND TEST BOARD 4       ##")
+print("##    5:  PROGRAM AND TEST BOARD 5       ##")
+print("##    6:  PROGRAM AND TEST BOARD 6       ##")
+print("##    7:  PROGRAM AND TEST BOARD 7       ##")
+print("##    8:  PROGRAM AND TEST BOARD 8       ##")
+print("##    9:  PROGRAM AND TEST BOARD 9       ##")
+print("##   10:  PROGRAM AND TEST BOARD 10      ##")
+print("## EXIT:  EXIT PROGRAM                   ##")
+print("###########################################")
+print("###########################################")
 while True:
-    print("###########################################")
-    print("###########################################")
-    print("## SUPER DUPER TOP SECRET DEBUGGING MENU ##")
-    print("## OPTIONS:                              ##")
-    print("##    1:  PROGRAM AND TEST BOARD 1       ##")
-    print("##    2:  PROGRAM AND TEST BOARD 2       ##")
-    print("##    3:  PROGRAM AND TEST BOARD 3       ##")
-    print("##    4:  PROGRAM AND TEST BOARD 4       ##")
-    print("##    5:  PROGRAM AND TEST BOARD 5       ##")
-    print("##    6:  PROGRAM AND TEST BOARD 6       ##")
-    print("##    7:  PROGRAM AND TEST BOARD 7       ##")
-    print("##    8:  PROGRAM AND TEST BOARD 8       ##")
-    print("##    9:  PROGRAM AND TEST BOARD 9       ##")
-    print("##   10:  PROGRAM AND TEST BOARD 10      ##")
-    print("## EXIT:  EXIT PROGRAM                   ##")
-    print("###########################################")
-    print("###########################################")
     op_input = input(">> ")
-    
     if re.search("^[Ee][Xx][Ii][Tt]$", op_input):
         exit(0)
     elif re.search("^[1-9]0?$", op_input):
@@ -163,10 +162,7 @@ while True:
         else:
             results.append("FAIL")
         print("TESTING RESULTS:")
-        i = 1
-        for result in results:
-            print("".join(["BOARD ", op_input, " RESULT: ", result]))
-            i += 1
+        print("".join(["BOARD ", op_input, " RESULT: ", result]))
         del results[:]
     else:
         print("WRONG COMMAND ENTERED.  TRY AGAIN.")
