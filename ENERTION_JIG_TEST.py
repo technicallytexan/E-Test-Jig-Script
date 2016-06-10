@@ -38,7 +38,9 @@ for port in COM_ports:
 print("BEGINNING ENERTION PROGRAMMING SEQUENCE")
 while True:
     print("PRESS ENTER WHEN PANEL IS INSERTED INTO THE JIG OR EXIT THE PROGRAM IF FINISHED")
-    raw_input("")
+    op_input = raw_input("")
+    if re.search("DB87", op_input):
+        break
     for i in range(1,10):
         ser.flushInput()
         ser.flushOutput()
@@ -72,6 +74,7 @@ while True:
         inbuffer = ser.read(6)
         print("COMPLETE")
         ser.flushInput()
+# Test if pass or fail
         if re.search("PA", inbuffer):
             results.append("PASS")
         else:
@@ -79,5 +82,17 @@ while True:
     print("TESTING RESULTS:")
     i = 1
     for result in results:
-        print("".join(["Board ", i, " Result: ", result]))
+        print("".join(["BOARD ", i, " RESULT: ", result]))
         i += 1
+    del results[:]
+
+while True:
+    print("###########################################")
+    print("## SUPER DUPER TOP SECRET DEBUGGING MENU ##")
+    print("## OPTIONS:                              ##")
+    print("## 1: PROGRAM AND TEST BOARD 1           ##")
+    print("## 1: PROGRAM AND TEST BOARD 1           ##")
+    print("## 1: PROGRAM AND TEST BOARD 1           ##")
+    print("## 1: PROGRAM AND TEST BOARD 1           ##")
+    print("## 1: PROGRAM AND TEST BOARD 1           ##")
+    print("## 1: PROGRAM AND TEST BOARD 1           ##")
