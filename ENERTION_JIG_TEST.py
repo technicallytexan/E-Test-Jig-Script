@@ -38,7 +38,7 @@ for port in COM_ports:
 print("BEGINNING ENERTION PROGRAMMING SEQUENCE")
 while True:
     print("PRESS ENTER WHEN PANEL IS INSERTED INTO THE JIG OR EXIT THE PROGRAM IF FINISHED")
-    op_input = raw_input("")
+    op_input = input("")
     if re.search("DB87", op_input):
         break
     for i in range(1,10):
@@ -88,11 +88,71 @@ while True:
 
 while True:
     print("###########################################")
+    print("###########################################")
     print("## SUPER DUPER TOP SECRET DEBUGGING MENU ##")
     print("## OPTIONS:                              ##")
-    print("## 1: PROGRAM AND TEST BOARD 1           ##")
-    print("## 1: PROGRAM AND TEST BOARD 1           ##")
-    print("## 1: PROGRAM AND TEST BOARD 1           ##")
-    print("## 1: PROGRAM AND TEST BOARD 1           ##")
-    print("## 1: PROGRAM AND TEST BOARD 1           ##")
-    print("## 1: PROGRAM AND TEST BOARD 1           ##")
+    print("##    1:  PROGRAM AND TEST BOARD 1       ##")
+    print("##    2:  PROGRAM AND TEST BOARD 2       ##")
+    print("##    3:  PROGRAM AND TEST BOARD 3       ##")
+    print("##    4:  PROGRAM AND TEST BOARD 4       ##")
+    print("##    5:  PROGRAM AND TEST BOARD 5       ##")
+    print("##    6:  PROGRAM AND TEST BOARD 6       ##")
+    print("##    7:  PROGRAM AND TEST BOARD 7       ##")
+    print("##    8:  PROGRAM AND TEST BOARD 8       ##")
+    print("##    9:  PROGRAM AND TEST BOARD 9       ##")
+    print("##   10:  PROGRAM AND TEST BOARD 10      ##")
+    print("## EXIT:  EXIT PROGRAM                   ##")
+    print("###########################################")
+    print("###########################################")
+    op_input = input(">> ")
+    
+    if re.search("[Ee][Xx][Ii][Tt]", op_input):
+        exit(0)
+    else:
+        print("BEGINNING ENERTION PROGRAMMING SEQUENCE")
+        print("PRESS ENTER WHEN PANEL IS INSERTED INTO THE JIG OR EXIT THE PROGRAM IF FINISHED")
+        op_input = input("")
+        ser.flushInput()
+        ser.flushOutput()
+# Send initialize command
+        ser.write("INIT\r\n")
+        ser.flushOutput()
+# Wait for response
+        while ser.inWaiting():
+            pass
+        inbuffer = ser.read(6)
+        ser.flushInput()
+# Send command to open programming lines for board
+        time.sleep(1)
+        ser.write("".join(["PB", op_input, "\r\n"]))
+        ser.flushOutput()
+# Wait for response
+        while ser.inWaiting():
+            pass
+        inbuffer = ser.read(6)
+           ser.flushInput()
+# Program board
+        print("".join(["PROGRAMMING BOARD ", op_input, "..."])
+        os.system("".join(["ST-LINK_CLI.exe -c SWD SWCLK=9 -P \"", file_in, "\" 0x08000000 -V"]))
+#os.system("TASKKILL /F /IM ST-LINK_CLI.exe")    # Not needed apparently :)
+        ser.write("PC\r\n")
+        print("".join(["TESTING BOARD ", op_input, "... "], end="")
+        ser.flushOutput()
+# Wait for response
+        while ser.inWaiting():
+            pass
+        inbuffer = ser.read(6)
+        print("COMPLETE")
+        ser.flushInput()
+# Test if pass or fail
+        if re.search("PA", inbuffer):
+            results.append("PASS")
+        else:
+            results.append("FAIL")
+        print("TESTING RESULTS:")
+        i = 1
+        for result in results:
+            print("".join(["BOARD ", op_input, " RESULT: ", result]))
+            i += 1
+        del results[:]
+    
