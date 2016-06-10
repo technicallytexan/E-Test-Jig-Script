@@ -148,7 +148,6 @@ while True:
 # Program board
         print("".join(["PROGRAMMING BOARD ", op_input, "..."])
         os.system("".join(["ST-LINK_CLI.exe -c SWD SWCLK=9 -P \"", file_in, "\" 0x08000000 -V"]))
-#os.system("TASKKILL /F /IM ST-LINK_CLI.exe")    # Not needed apparently :)
         ser.write("PC\r\n")
         print("".join(["TESTING BOARD ", op_input, "... "], end="")
         ser.flushOutput()
