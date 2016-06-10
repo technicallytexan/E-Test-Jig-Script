@@ -45,6 +45,8 @@ while port_not_found:
         print("ERROR: TIMED OUT - CANNOT FIND JIG")
         exit(1)
 
+results = []
+
 # Commence the jigglin'
 print("BEGINNING ENERTION PROGRAMMING SEQUENCE")
 while True:
