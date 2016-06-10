@@ -12,7 +12,7 @@ file_in = "NONE"
 cwd_dir_files = os.listdir(os.getcwd())
 # Get filename for binary
 for file in cwd_dir_files:
-    if re.search("(.bin|.hex)$", file):
+    if re.search(".(bin|hex)$", file):
         file_in = file
         break
 if file_in == "NONE":
@@ -21,7 +21,7 @@ if file_in == "NONE":
 
 ST_LINK_FOUND = 0
 for file in cwd_dir_files:
-    if re.search("(ST-LINK[\w]*.exe)", file):
+    if re.search("ST-LINK.*\.(exe|EXE)$", file):
         ST_LINK_FOUND = 1
 if ST_LINK_FOUND == 0:
     print("ERROR: ST-LINK COMMAND LINE INTERFACE NOT FOUND")
@@ -51,9 +51,9 @@ while True:
     print("PRESS ENTER WHEN PANEL IS INSERTED INTO THE JIG")
     print("TYPE \"EXIT\" TO CLOSE THE PROGRAM")
     op_input = input(">> ")
-    if re.search("^[Ee][Xx][Ii][Tt]$", op_input):
+    if re.search("(?i)^exit$", op_input):
         exit(0)
-    if re.search("DB87", op_input):
+    if re.search("^DB87$", op_input):
         break
     for i in range(1,10):
         ser.flushInput()
@@ -119,7 +119,7 @@ print("###########################################")
 print("###########################################")
 while True:
     op_input = input(">> ")
-    if re.search("^[Ee][Xx][Ii][Tt]$", op_input):
+    if re.search("(?i)^exit$", op_input):
         exit(0)
     elif re.search("^[1-9]0?$", op_input):
         print("BEGINNING ENERTION PROGRAMMING SEQUENCE")
