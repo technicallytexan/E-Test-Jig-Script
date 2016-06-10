@@ -63,15 +63,15 @@ while True:
     print("TYPE \"EXIT\" TO CLOSE THE PROGRAM")
     localtime = time.localtime()
     testing_log.write("".join(["PANEL TEST BEGAN AT ", ":".join([str(localtime.tm_hour),
-                      str(localtime.tm_min), str(localtime.tm_sec)]), " ON ",
-                      "/".join([str(localtime.tm_mon), str(localtime.tm_mday),
-                      str(localtime.tm_year)])]))
+                            str(localtime.tm_min), str(localtime.tm_sec)]), " ON ",
+                            "/".join([str(localtime.tm_mon), str(localtime.tm_mday),
+                            str(localtime.tm_year)])]))
     op_input = input(">> ")
     if re.search("(?i)^exit$", op_input):
         exit(0)
     if re.search("^DB87$", op_input):
         break
-    for i in range(1,10):
+    for i in range(1, 10):
         ser.flushInput()
         ser.flushOutput()
 # Send initialize command
@@ -184,12 +184,10 @@ while True:
         print("COMPLETE")
         ser.flushInput()
 # Test if pass or fail
-        if re.search("PA", inbuffer):
-            results.append("PASS")
-        else:
-            results.append("FAIL")
         print("TESTING RESULTS:")
-        print("".join(["BOARD ", op_input, " RESULT: ", result]))
-        del results[:]
+        if re.search("PA", inbuffer):
+            print("".join(["BOARD ", op_input, " RESULT: PASS"]))
+        else:
+            print("".join(["BOARD ", op_input, " RESULT: FAIL"]))
     else:
         print("WRONG COMMAND ENTERED.  TRY AGAIN.")
