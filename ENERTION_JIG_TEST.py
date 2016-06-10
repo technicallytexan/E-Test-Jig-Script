@@ -64,7 +64,7 @@ while True:
 # Wait for response
         while ser.inWaiting():
             pass
-        inbuffer = ser.read(6)
+        inbuffer = ser.readline()
         ser.flushInput()
 # Send command to open programming lines for board
         time.sleep(1)
@@ -74,7 +74,7 @@ while True:
 # Wait for response
         while ser.inWaiting():
             pass
-        inbuffer = ser.read(6)
+        inbuffer = ser.readline()
         ser.flushInput()
 # Program board
         print("".join(["PROGRAMMING BOARD ", i, "..."])
@@ -85,7 +85,7 @@ while True:
 # Wait for response
         while ser.inWaiting():
             pass
-        inbuffer = ser.read(6)
+        inbuffer = ser.readline()
         print("COMPLETE")
         ser.flushInput()
 # Test if pass or fail
@@ -134,7 +134,7 @@ while True:
 # Wait for response
         while ser.inWaiting():
             pass
-        inbuffer = ser.read(6)
+        inbuffer = ser.readline()
         ser.flushInput()
 # Send command to open programming lines for board
         time.sleep(1)
@@ -143,7 +143,7 @@ while True:
 # Wait for response
         while ser.inWaiting():
             pass
-        inbuffer = ser.read(6)
+        inbuffer = ser.readline()
             ser.flushInput()
 # Program board
         print("".join(["PROGRAMMING BOARD ", op_input, "..."])
@@ -154,7 +154,7 @@ while True:
 # Wait for response
         while ser.inWaiting():
             pass
-        inbuffer = ser.read(6)
+        inbuffer = ser.readline()
         print("COMPLETE")
         ser.flushInput()
 # Test if pass or fail
