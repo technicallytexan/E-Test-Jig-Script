@@ -6,6 +6,8 @@ import time
 
 __author__ = 'Dustin'
 
+print("ENERTION PROGRAMMING AND TESTING")
+
 file_in = "NONE"
 cwd_dir_files = os.listdir(os.getcwd())
 # Get filename for binary
@@ -14,7 +16,7 @@ for file in cwd_dir_files:
         file_in = file
         break
 if file_in == "NONE":
-    print("BINARY FILE NOT FOUND")
+    print("ERROR: BINARY FILE NOT FOUND")
     exit(1)
 
 ST_LINK_FOUND = 0
@@ -22,23 +24,34 @@ for file in cwd_dir_files:
     if re.search("(ST-LINK[\w]*.exe)", file):
         ST_LINK_FOUND = 1
 if ST_LINK_FOUND == 0:
-    print("ST-LINK COMMAND LINE INTERFACE NOT FOUND")
+    print("ERROR: ST-LINK COMMAND LINE INTERFACE NOT FOUND")
     exit(1)
 
 # Find COM port
-COM_ports = serial.tools.list_ports_windows.comports()
+port_found = 0
+initial_count = time.clock()
+print("SEARCHING FOR JIG...")
+while port_found == 0:
+    COM_ports = serial.tools.list_ports_windows.comports()
 # Search for correct COM port and open it
-for port in COM_ports:
-    if re.search("DNDKSY0A", port.serial_number):    # TODO: This needs to be changed to another serial port parameter
-        ser = serial.Serial('COM10', 115200, timeout=None, parity=serial.PARITY_NONE, bytesize=serial.EIGHTBITS, stopbits=serial.STOPBITS_ONE, rtscts=0)
-        print("SERIAL COM PORT CONNECTED")
-        break
+    for port in COM_ports:
+        if re.search("DNDKSY0A", port.serial_number):    # TODO: This needs to be changed to another serial port parameter
+            ser = serial.Serial('COM10', 115200, timeout=None, parity=serial.PARITY_NONE, bytesize=serial.EIGHTBITS, stopbits=serial.STOPBITS_ONE, rtscts=0)
+            print("SERIAL COM PORT CONNECTED")
+            port_found = 1
+            break
+    if (time.clock() - initial_count) >= 30:
+        print("ERROR: TIMED OUT - CANNOT FIND JIG")
+        exit(1)
 
 # Commence the jigglin'
 print("BEGINNING ENERTION PROGRAMMING SEQUENCE")
 while True:
-    print("PRESS ENTER WHEN PANEL IS INSERTED INTO THE JIG OR EXIT THE PROGRAM IF FINISHED")
+    print("PRESS ENTER WHEN PANEL IS INSERTED INTO THE JIG")
+    print("TYPE \"EXIT\" TO CLOSE THE PROGRAM")
     op_input = input("")
+    if re.search("^[Ee][Xx][Ii][Tt]$", op_input):
+        exit(0)
     if re.search("DB87", op_input):
         break
     for i in range(1,10):
