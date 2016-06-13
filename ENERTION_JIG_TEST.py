@@ -71,50 +71,48 @@ while True:
         exit(0)
     if re.search("(?i)^DB87$", op_input):
         break
-    for i in range(1, 10):
+    for i in range(1, 11):
         ser.flushInput()
         ser.flushOutput()
 # Send initialize command
-        ser.write("INIT\r\n")
+        ser.write(b"INIT\r\n")
         ser.flushOutput()
 # Wait for response
         while ser.inWaiting():
             pass
-        inbuffer = ser.readline()
+        inbuffer = ser.read(6)
         ser.flushInput()
 # Send command to open programming lines for board
         time.sleep(1)
         # ser.write("PB\r\n")
-        ser.write("".join(["PB", i, "\r\n"]))
+        ser.write(b"".join(["PB", str(i), "\r\n"]))
         ser.flushOutput()
 # Wait for response
         while ser.inWaiting():
             pass
-        inbuffer = ser.readline()
+        inbuffer = ser.read(6)
         ser.flushInput()
 # Program board
-        #print("".join(["PROGRAMMING BOARD ", i, "..."]))
+        #print("".join(["PROGRAMMING BOARD ", str(i), "..."]))
         os.system("".join(["ST-LINK_CLI.exe -c SWD SWCLK=9 -P \"", file_in, "\" 0x08000000 -V"]))
-        ser.write("PC\r\n")
-        #print("".join(["TESTING BOARD ", i, "... "]), end="")
+        ser.write(b"PC\r\n")
+        #print("".join(["TESTING BOARD ", str(i), "... "]), end="")
         ser.flushOutput()
 # Wait for response
-        while ser.inWaiting():
-            pass
-        inbuffer = ser.readline()
-        #print("COMPLETE")
         ser.flushInput()
+        inbuffer = ser.read(3)
+        #print("COMPLETE")
 # Test if pass or fail
         if re.search("PA", inbuffer):
             results.append("PASS")
-            testing_log.write("".join(["BOARD ", i, " RESULT: PASS\r\n"]))
+            testing_log.write("".join(["BOARD ", str(i), " RESULT: PASS\r\n"]))
         else:
             results.append("FAIL")
-            testing_log.write("".join(["BOARD ", i, " RESULT: PASS\r\n"]))
+            testing_log.write("".join(["BOARD ", str(i), " RESULT: PASS\r\n"]))
     print("TESTING RESULTS:")
     i = 1
     for result in results:
-        print("".join(["BOARD ", i, " RESULT: ", result]))
+        print("".join(["BOARD ", str(i), " RESULT: ", result]))
         i += 1
     del results[:]
     testing_log.write("\r\n")
@@ -145,9 +143,9 @@ print("###########################################")
 print("###########################################")
 while True:
     op_input = input(">> ")
-    if re.search("(?i)^exit$", op_input):
+    if re.search("(?i)exit", op_input):
         exit(0)
-    elif re.search("^([1-9]|10)$", op_input):
+    elif re.search("([1-9]|10)", op_input):
         print("BEGINNING ENERTION PROGRAMMING SEQUENCE")
         print("PRESS ENTER WHEN PANEL IS INSERTED INTO THE JIG")
         print("TYPE \"EXIT\" TO CLOSE THE PROGRAM")
