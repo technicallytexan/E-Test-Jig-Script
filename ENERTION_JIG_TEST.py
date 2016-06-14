@@ -1,4 +1,3 @@
-import serial
 import serial.tools.list_ports_windows
 import os
 import re
@@ -9,8 +8,7 @@ __author__ = 'Dustin'
 localtime = time.localtime()
 
 log_file = "-".join([str(localtime.tm_year), str(localtime.tm_mon), str(localtime.tm_mday), 
-                     str(localtime.tm_hour), str(localtime.tm_min), str(localtime.tm_sec), 
-                     "TEST_LOG.log"])
+                     str(localtime.tm_hour), "TEST_LOG.log"])
 
 testing_log = open(log_file, 'w')
 
@@ -67,9 +65,9 @@ while True:
                             "/".join([str(localtime.tm_mon), str(localtime.tm_mday),
                             str(localtime.tm_year)])]))
     op_input = input(">> ")
-    if re.search("(?i)^exit$", op_input):
+    if re.search("(?i)exit", op_input):
         exit(0)
-    if re.search("(?i)^DB87$", op_input):
+    if re.search("(?i)DB87", op_input):
         break
     for i in range(1, 11):
         ser.flushInput()
